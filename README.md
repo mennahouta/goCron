@@ -1,6 +1,6 @@
 # cron-scheduler
 
 ## Components
-- Cron
+- Job
 - Periodic Closure
 - Scheduler
