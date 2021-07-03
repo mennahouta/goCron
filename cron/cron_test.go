@@ -81,3 +81,21 @@ func TestRunTimeDifference(t *testing.T) {
 		t.Errorf("want time difference between job5 runs: 3s, got: %s", diff.String())
 	}
 }
+
+func TestRemoveJob(t *testing.T) {
+	numOfCalls := 0
+	cron := New()
+	cron.Start()
+	defer cron.Stop()
+	cron.AddJob("job6", time.Duration(0), time.Duration(1*time.Second), func() {
+		numOfCalls += 1
+	})
+
+	time.Sleep(5 * time.Second)
+	numOfCallsBeforeDeletion := numOfCalls
+	cron.RemoveJob("job6")
+	time.Sleep(5 * time.Second)
+	if numOfCalls != numOfCallsBeforeDeletion {
+		t.Errorf("job6 was still executed after deletion")
+	}
+}
